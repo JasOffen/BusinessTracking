@@ -17,12 +17,13 @@ function askQuestions() {
                 departmentAdd()
             } else if (answers.adding_type == 'Add Role') {
                 console.log('Were adding a role');
-
+                roleAdd();
             } else if (answers.adding_type == 'Add Employee') {
                 console.log('Were adding an employee');
-
+                employeeAdd()
             } else {
-
+                console.log('Seems there was an error')
+                addAnother();
             }
         })
         .catch((error) => {
@@ -69,7 +70,7 @@ function askQuestions() {
                 }
             ])
             .then((answers) => {
-                console.log('added the ' + answers.role_name + ' department to the database')
+                console.log('added the ' + answers.role_name + ' role to the database')
             })
             .catch((error) => {
                 if (error.isTtyError) {
@@ -91,10 +92,20 @@ function askQuestions() {
                     name: 'employee_l_name',
                     type: 'input',
                     message: 'What is the last name of your employee?'
+                },
+                {
+                    name: 'employee_role',
+                    type: 'input',
+                    message: 'What is your Emploees Role?'
+                },
+                {
+                    name: 'employee_manager',
+                    type: 'input',
+                    message: 'Who is this Employees Manager?'
                 }
             ])
             .then((answers) => {
-                console.log('added the ' + answers.employee_f_name + ' department to the database')
+                console.log(`added ${answers.employee_f_name}  ${answers.employee_l_name} as a ${answers.employee_role} under ${answers.employee_manager}`)
             })
             .catch((error) => {
                 if (error.isTtyError) {
