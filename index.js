@@ -1,7 +1,11 @@
-const inquirer = require('inquirer')
+const inquirer = require('inquirer');
+const mysql = require('mysql2');
+const env = require('dotenv').config();
+const cTable = require('console.table');
+//const db = require('./config/connection');
 
 
-function askQuestions() {
+const askQuestions = async () => {
     inquirer
         .prompt([
             {
@@ -151,6 +155,7 @@ function askQuestions() {
                 }
             ])
             .then((answers) => {
+                connect()
                 if (answers.add_another == 'Yes') {
                     askQuestions();
                 } else {
@@ -167,4 +172,17 @@ function askQuestions() {
     }
 
 }
+
+const connect = async () => {
+    const db = mysql.createConnection({
+        host: 'localhost',
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME
+    },
+        console.log('Connected to the employee database')
+    );
+    console.table(['role', 'employee'], [])
+}
+
 askQuestions()
